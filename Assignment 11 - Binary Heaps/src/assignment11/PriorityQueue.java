@@ -23,7 +23,7 @@ public class PriorityQueue<AnyType> {
 	 */
 	@SuppressWarnings("unchecked")
 	public PriorityQueue(){
-		
+
 		currentSize = 0;
 		cmp = null;
 		array = (AnyType[]) new Object[10]; // safe to ignore warning
@@ -62,7 +62,7 @@ public class PriorityQueue<AnyType> {
 	 *             (Runs in constant time.)
 	 */
 	public AnyType findMin() throws NoSuchElementException {
-		// FILL IN -- do not return null
+		// TODO
 		return null;
 	}
 
@@ -75,7 +75,7 @@ public class PriorityQueue<AnyType> {
 	 *             (Runs in logarithmic time.)
 	 */
 	public AnyType deleteMin() throws NoSuchElementException {
-		// FILL IN -- do not return null
+		// TODO
 
 		// if the heap is empty, throw a NoSuchElementException
 
@@ -101,18 +101,36 @@ public class PriorityQueue<AnyType> {
 	 * @param x
 	 *            -- the item to be inserted
 	 */
+	@SuppressWarnings("unchecked")
 	public void add(AnyType x) {
-		// FILL IN
 
 		// if the array is full, double its capacity
+		if (currentSize == array.length) {
+
+			AnyType[] tempArray = (AnyType[]) new Object[array.length * 2];
+
+			for (int i = 0; i < array.length; i++) {
+				tempArray[i] = array[i];
+			}
+			array = tempArray;
+		}
+
+		// If the heap is empty, add the item to the first spot
+		if (currentSize == 0) {
+			array[0] = x;
+			currentSize++;
+			return;
+		}
 
 		// add the new item to the next available node in the tree, so that
 		// complete tree structure is maintained
+		array[currentSize] = x;
 
 		// update size
+		currentSize++;
 
 		// percolate the new item up the levels of the tree until heap order is restored
-		// It is STRONGLY recommended that you write a percolateUp helper method!
+		percolateUp(currentSize - 1);
 
 	}
 
@@ -153,6 +171,54 @@ public class PriorityQueue<AnyType> {
 		return cmp.compare(lhs, rhs);
 	}
 
+	/**
+	 * Percolates the item with the specified index up the heap until it reaches it appropriate position (i.e. when the
+	 * item is greater than its parent node).
+	 * 
+	 * @param index
+	 *            -- the index of the item that will be percolated up the heap
+	 */
+	private void percolateUp(int index) {
+
+		while (compare(array[index], array[parentIndex(index)]) < 0) {
+			AnyType temp = array[parentIndex(index)];
+			array[parentIndex(index)] = array[index];
+			array[index] = temp;
+			index = parentIndex(index);
+		}
+
+	}
+
+	/**
+	 * Returns the index of the parent node of the node with the specified index.
+	 * 
+	 * @param index
+	 *            -- the index of a child node
+	 */
+	private static int parentIndex(int index) {
+		return (index - 1) / 2;
+	}
+
+	/**
+	 * Returns the index of the left child of the node with the specified index.
+	 * 
+	 * @param index
+	 *            -- the index of a parent node
+	 */
+	private static int leftChildIndex(int index) {
+		return (index * 2) + 1;
+	}
+
+	/**
+	 * Returns the index of the right child of the node with the specified index.
+	 * 
+	 * @param index
+	 *            -- the index of a parent node
+	 */
+	private static int rightChildIndex(int index) {
+		return (index * 2) + 2;
+	}
+
 	// LEAVE IN for grading purposes
 	public Object[] toArray() {
 		Object[] ret = new Object[currentSize];
@@ -160,4 +226,5 @@ public class PriorityQueue<AnyType> {
 			ret[i] = array[i];
 		return ret;
 	}
+
 }
