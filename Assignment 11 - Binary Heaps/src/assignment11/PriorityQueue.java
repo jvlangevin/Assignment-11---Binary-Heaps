@@ -63,7 +63,12 @@ public class PriorityQueue<AnyType> {
 	 */
 	public AnyType findMin() throws NoSuchElementException {
 		// TODO
-		return null;
+		
+		if(this.size() == 0){
+			throw new NoSuchElementException();
+		}
+		
+		return this.array[0];
 	}
 
 	/**
@@ -78,19 +83,28 @@ public class PriorityQueue<AnyType> {
 		// TODO
 
 		// if the heap is empty, throw a NoSuchElementException
+		if(this.size() == 0){
+			throw new NoSuchElementException();
+		}
 
 		// store the minimum item so that it may be returned at the end
+		AnyType minValue = this.findMin();
 
 		// replace the item at minIndex with the last item in the tree
-
+		AnyType lastValue = this.array[this.size()-1];
+		this.array[0] = lastValue;
+		this.array[this.size() - 1] = null;
+		
 		// update size
+		this.currentSize--;
 
 		// percolate the item at minIndex down the tree until heap order is restored
 		// It is STRONGLY recommended that you write a percolateDown helper method!
-
+		this.percolateDown(0);
+		
+		
 		// return the minimum item that was stored
-
-		return null;
+		return minValue;
 	}
 
 	/**
@@ -187,6 +201,16 @@ public class PriorityQueue<AnyType> {
 			index = parentIndex(index);
 		}
 
+	}
+	
+	/**
+	 * Percolates the item downward with the specified index until it reaches the appropriate position
+	 * @param index
+	 */
+	private void percolateDown(int index) {
+		//TODO
+
+		
 	}
 
 	/**
