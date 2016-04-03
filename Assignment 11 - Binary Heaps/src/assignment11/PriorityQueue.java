@@ -62,8 +62,7 @@ public class PriorityQueue<AnyType> {
 	 *             (Runs in constant time.)
 	 */
 	public AnyType findMin() throws NoSuchElementException {
-		// TODO
-		
+
 		if(this.size() == 0){
 			throw new NoSuchElementException();
 		}
@@ -80,8 +79,7 @@ public class PriorityQueue<AnyType> {
 	 *             (Runs in logarithmic time.)
 	 */
 	public AnyType deleteMin() throws NoSuchElementException {
-		// TODO
-
+		
 		// if the heap is empty, throw a NoSuchElementException
 		if(this.size() == 0){
 			throw new NoSuchElementException();
@@ -101,7 +99,6 @@ public class PriorityQueue<AnyType> {
 		// percolate the item at minIndex down the tree until heap order is restored
 		// It is STRONGLY recommended that you write a percolateDown helper method!
 		this.percolateDown(0);
-		
 		
 		// return the minimum item that was stored
 		return minValue;
@@ -208,9 +205,61 @@ public class PriorityQueue<AnyType> {
 	 * @param index
 	 */
 	private void percolateDown(int index) {
-		//TODO
 
+		while(numChildren(index) != 0){
+			
+			// If the node has one child
+			if(numChildren(index) == 1){
+				// If the node is greater than its child, swap them
+				if(compare(array[index], array[leftChildIndex(index)]) > 0){
+					AnyType temp = array[leftChildIndex(index)];
+					array[leftChildIndex(index)] = array[index];
+					array[index] = temp;
+					return;
+				}
+				// If the node is less than its child, it is at its correct position
+				else return;
+			}
+			else{
+				// If the node is less than both its children, it is at its correct position
+				if(compare(array[index], array[leftChildIndex(index)]) < 0 && compare(array[index], array[rightChildIndex(index)]) < 0){
+					return;
+				}
+				// If the node's right child is less than its left child, swap the node with the right child
+				// and continue percolating downwards
+				if(compare(array[rightChildIndex(index)], array[leftChildIndex(index)]) < 0){
+					AnyType temp = array[rightChildIndex(index)];
+					array[rightChildIndex(index)] = array[index];
+					array[index] = temp;
+					index = rightChildIndex(index);
+				}
+				// If the node's left child is less than its right child, swap the node with the left child
+				// and continue percolating downwards 
+				else if(compare(array[leftChildIndex(index)], array[rightChildIndex(index)]) < 0){
+					AnyType temp = array[leftChildIndex(index)];
+					array[leftChildIndex(index)] = array[index];
+					array[index] = temp;
+					index = leftChildIndex(index);
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Returns the number of children of the node with the specified index.
+	 * @param index -- index of a node
+	 */
+	private int numChildren(int index){
 		
+		int children = 0;
+		
+		if(array[(index * 2) + 1] != null){
+			children++;
+		}
+		if(array[(index * 2) + 2] != null){
+			children++;
+		}
+		return children;
 	}
 
 	/**
