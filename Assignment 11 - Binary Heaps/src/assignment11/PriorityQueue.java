@@ -253,11 +253,15 @@ public class PriorityQueue<AnyType> {
 		
 		int children = 0;
 		
-		if(array[(index * 2) + 1] != null){
-			children++;
+		if((index*2) + 1 <= this.currentSize){
+			if(array[(index * 2) + 1] != null){
+				children++;
+			}
 		}
-		if(array[(index * 2) + 2] != null){
-			children++;
+		if((index*2) + 1 <= this.currentSize){
+			if(array[(index * 2) + 2] != null){
+				children++;
+			}
 		}
 		return children;
 	}
