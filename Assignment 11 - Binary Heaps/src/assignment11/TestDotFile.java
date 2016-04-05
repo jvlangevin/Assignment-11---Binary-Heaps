@@ -15,13 +15,15 @@ public class TestDotFile {
 	}
 	Collections.shuffle(smallIntArray);
 	
-	PriorityQueue pQ_Int = new PriorityQueue<Integer>();
+	PriorityQueue<Integer> pQ_Int = new PriorityQueue<Integer>();
 	
 	for (int element : smallIntArray) {
 		pQ_Int.add(element);
 	}
 	
 	pQ_Int.generateDotFile("assignment11DOT.dot");
+	pQ_Int.deleteMin();
+	pQ_Int.generateDotFile("assignment11DOTDeleteMin.dot");
 
 	}
 }
